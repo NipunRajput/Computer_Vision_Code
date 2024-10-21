@@ -1,0 +1,20 @@
+allprojects {
+    repositories {
+        google()      // Google's Maven repository for Android dependencies
+        mavenCentral() // Maven Central repository for third-party dependencies
+    }
+}
+
+rootProject.buildDir = "../build" // Setting the root project build directory
+
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}" // Each subproject will have its build directory under the root build folder
+}
+
+subprojects {
+    project.evaluationDependsOn(":app") // Ensuring all subprojects are evaluated after the app module
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir // Registering a task to clean the entire build directory
+}
